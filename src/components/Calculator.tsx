@@ -31,6 +31,12 @@ export default function Calculator() {
   const [showHistory, setShowHistory] = useState(false);
   const [scientific, setScientific] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [showWelcome, setShowWelcome] = useState(true);
+
+  useEffect(() => {
+    const t = setTimeout(() => setShowWelcome(false), 2600);
+    return () => clearTimeout(t);
+  }, []);
 
   // Load persisted state
   useEffect(() => {
@@ -222,6 +228,24 @@ export default function Calculator() {
 
   return (
     <div className="min-h-screen w-full px-4 py-6 sm:py-10 flex items-start justify-center">
+      {showWelcome && (
+        <div
+          className="fixed inset-0 z-50 grid place-items-center bg-background/80 backdrop-blur-xl animate-fade-in"
+          onClick={() => setShowWelcome(false)}
+        >
+          <div className="text-center px-6">
+            <div className="mx-auto mb-6 h-20 w-20 rounded-3xl bg-gradient-to-br from-primary via-key-op to-primary grid place-items-center text-primary-foreground text-3xl font-bold shadow-2xl animate-scale-in">
+              =
+            </div>
+            <h1 className="font-display text-4xl sm:text-6xl font-light tracking-tight bg-gradient-to-r from-primary via-key-op to-primary bg-clip-text text-transparent">
+              Welcome to Sidheswar Calculator
+            </h1>
+            <p className="mt-4 text-base sm:text-lg text-muted-foreground">
+              The new edged calculator
+            </p>
+          </div>
+        </div>
+      )}
       <div className="w-full max-w-6xl grid gap-6 lg:grid-cols-[1fr_320px] items-start">
         {/* Calculator card */}
         <div className="glass-panel rounded-3xl p-5 sm:p-7 animate-fade-in">
@@ -231,7 +255,9 @@ export default function Calculator() {
               <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-primary to-primary/60 grid place-items-center text-primary-foreground font-bold shadow-md">
                 =
               </div>
-              <h1 className="text-lg font-semibold tracking-tight">Calculator</h1>
+              <h1 className="text-lg font-semibold tracking-tight bg-gradient-to-r from-primary via-key-op to-primary bg-clip-text text-transparent">
+                Sidheswar Calculator
+              </h1>
             </div>
             <div className="flex items-center gap-1.5">
               <IconBtn label="Scientific mode" active={scientific} onClick={() => setScientific((s) => !s)}>
